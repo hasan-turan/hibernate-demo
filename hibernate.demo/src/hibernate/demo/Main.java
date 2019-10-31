@@ -16,6 +16,7 @@ public class Main {
 		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(City.class)
 				.buildSessionFactory();
 
+		// Session is a type of unit of work desing pattern
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
