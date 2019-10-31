@@ -9,7 +9,51 @@ import org.hibernate.cfg.Configuration;
 public class Main {
 
 	public static void main(String[] args) {
-		add();
+		delete();
+	}
+
+	public static void delete() {
+		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(City.class)
+				.buildSessionFactory();
+
+		// Session is a type of unit of work desing pattern
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			// HQL --> Hibernate query language
+
+			City city = session.get(City.class, 4085);
+
+			session.remove(city);
+
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			sessionFactory.close();
+		}
+	}
+
+	public static void update() {
+		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(City.class)
+				.buildSessionFactory();
+
+		// Session is a type of unit of work desing pattern
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			// HQL --> Hibernate query language
+
+			City city = session.get(City.class, 4085);
+			city.setName("Düzce Hibernate Update");
+			session.save(city);
+
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			sessionFactory.close();
+		}
 	}
 
 	public static void add() {
